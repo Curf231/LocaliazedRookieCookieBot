@@ -24,18 +24,27 @@ public class RobotContainer {
   }
 
   private void configureBindings() {
+    // NOTE: getPOV() returns -1 if nothing is pressed
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    new Trigger(() ->m_driverController.getPOV() != 0)
-    .whileTrue(
+    new Trigger(() ->m_driverController.getPOV() != -1)
+    .onTrue(
       m_DriveBase.rotateToDegree(m_driverController.getPOV())
       );
 
-    new Trigger(() -> m_driverController.getPOV() == 0)
-    .and(() -> m_driverController.getCrossButton()).whileTrue(
-      m_DriveBase.drive()
+    new Trigger(() ->
+        m_driverController.getCrossButton()
+        && m_driverController.getPOV() == -1
+    ).whileTrue(
+        m_DriveBase.drive()
     );
+  
+
+    // new Trigger(() -> m_driverController.getPOV() == 0)
+    // .and(() -> m_driverController.getCrossButton()).whileTrue(
+    //   m_DriveBase.drive()
+    // );
   }
   
   public Command getAutonomousCommand() {
