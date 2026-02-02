@@ -5,7 +5,6 @@
 package frc.robot;
 
 import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
 import frc.robot.subsystems.DriveBase;
 import frc.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.PS5Controller;
@@ -25,20 +24,44 @@ public class RobotContainer {
 
   private void configureBindings() {
     // NOTE: getPOV() returns -1 if nothing is pressed
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+    // new Trigger(m_exampleSubsystem::exampleCondition)
+    //     .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    new Trigger(() ->m_driverController.getPOV() != -1)
-    .onTrue(
-      m_DriveBase.rotateToDegree(m_driverController.getPOV())
-      );
+    // new Trigger(() ->m_driverController.getPOV() != -1)
+    // .onTrue(
+    //   m_DriveBase.rotateToDegree(m_driverController.getPOV())
+    //   );
 
-    new Trigger(() ->
-        m_driverController.getCrossButton()
-        && m_driverController.getPOV() == -1
-    ).whileTrue(
-        m_DriveBase.drive()
-    );
+    // new Trigger(() ->
+    //     m_driverController.getCrossButton()
+    //     && m_driverController.getPOV() == -1
+    // ).whileTrue(
+    //     m_DriveBase.drive()
+    // );
+
+
+
+
+    new Trigger(() -> m_driverController.getR2Axis() > 0.1)
+        .whileTrue(
+            m_DriveBase.run(() ->
+                m_DriveBase.drive(m_driverController.getR2Axis())
+            )
+        );
+
+    new Trigger(() -> m_driverController.getL2Axis() > 0.1)
+        .whileTrue(
+            m_DriveBase.run(() ->
+                m_DriveBase.drive(-m_driverController.getL2Axis())
+            )
+        );
+
+    new Trigger(() -> Math.abs(m_driverController.getLeftX()) > 0.3)
+        .whileTrue(
+            m_DriveBase.run(() ->
+                m_DriveBase.rotateManual(m_driverController.getLeftX())
+            )
+        );
   
 
     // new Trigger(() -> m_driverController.getPOV() == 0)

@@ -98,7 +98,23 @@ public class DriveBase extends SubsystemBase{
         rightMotor.set(-speed);
     }
 
-    public Command drive(){
+    public void rotateManual(double xAxis) {
+    // deadzone, assuming drive is even on both pos and neg
+    if (Math.abs(xAxis) < 0.2) {
+        stopMotors();
+        return;
+    }
+
+    // Optional: scale rotation speed
+    double rotationSpeed = xAxis * 0.6;
+
+    // Tank drive rotation
+    leftMotor.set(rotationSpeed);
+    rightMotor.set(-rotationSpeed);
+}
+
+
+    public Command drive(double speed){
         return run(() -> this.move()).finallyDo(() -> this.stopMotors());
         //return run(() -> this.move());
     }
