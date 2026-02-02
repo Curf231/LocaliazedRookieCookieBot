@@ -27,15 +27,13 @@ public class RobotContainer {
     new Trigger(m_exampleSubsystem::exampleCondition)
         .onTrue(new ExampleCommand(m_exampleSubsystem));
 
-    new Trigger(() -> m_driverController.getRawAxis(0) > 0.1)
-    .or(() -> m_driverController.getRawAxis(1) > 0.1)
+    new Trigger(() ->m_driverController.getPOV() != 0)
     .whileTrue(
-      m_DriveBase.rotateToDegree(Math.atan(m_driverController.getRawAxis(1)/m_driverController.getRawAxis(0))*(180/Math.PI))
+      m_DriveBase.rotateToDegree(m_driverController.getPOV())
       );
 
-    new Trigger(() -> m_driverController.getRawAxis(0) < 0.1)
-    .and(() -> m_driverController.getRawAxis(1) < 0.1)
-    .and(() -> m_driverController.getL1ButtonPressed()).whileTrue(
+    new Trigger(() -> m_driverController.getPOV() == 0)
+    .and(() -> m_driverController.getCrossButton()).whileTrue(
       m_DriveBase.drive()
     );
   }

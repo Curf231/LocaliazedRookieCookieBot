@@ -38,8 +38,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    m_DriveBase = m_robotContainer.getDriveBase();
-    m_DriveBase.updateOdometry();
     CommandScheduler.getInstance().run();
   }
 
@@ -74,6 +72,8 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    //m_DriveBase = m_robotContainer.getDriveBase();
+    //m_DriveBase.updateOdometry();
   }
 
   /** This function is called periodically during operator control. */
