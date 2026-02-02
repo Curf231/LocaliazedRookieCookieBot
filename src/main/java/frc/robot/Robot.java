@@ -16,6 +16,7 @@ import frc.robot.subsystems.DriveBase;
  */
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  @SuppressWarnings ("unused")
   private DriveBase m_DriveBase;
   private final RobotContainer m_robotContainer;
 
