@@ -84,10 +84,11 @@ public class DriveBase extends SubsystemBase{
         rightMotor.set(0.2);
     }
 
-    private void stopMotors(){
+    public void stopMotors(){
         // instead of setting neutral mode to brake every time we want to stop, 
         // set once in constructor and set the motors to 0 whenever you want to stop
         // Spamming neutral mode wastes CAN bandwidth
+  
         leftMotor.set(0);
         rightMotor.set(0);
     }
@@ -99,19 +100,30 @@ public class DriveBase extends SubsystemBase{
     }
 
     public void rotateManual(double xAxis) {
-    // deadzone, assuming drive is even on both pos and neg
-    if (Math.abs(xAxis) < 0.2) {
-        stopMotors();
-        return;
+        // Deadzone
+        if (Math.abs(xAxis) > 0.2) {
+         double rotationSpeed = xAxis * 0.6;
+         // For turning in place, left and right motors must be opposite
+            leftMotor.set(rotationSpeed);
+            rightMotor.set(rotationSpeed);
+        } else {
+            // Stop motors when joystick is neutral
+          stopMotors();
+        }
     }
 
-    // Optional: scale rotation speed
-    double rotationSpeed = xAxis * 0.6;
-
-    // Tank drive rotation
-    leftMotor.set(rotationSpeed);
-    rightMotor.set(-rotationSpeed);
-}
+    public void driveManual(double speed) {
+       // Forward/backward: triggers give values 0 -> 1
+        if (Math.abs(speed) > 0.1) {
+            leftMotor.set(speed);
+            rightMotor.set(-speed);
+        } else {
+            stopMotors();
+        }
+    }
+  
+    
+    
 
 
     public Command drive(double speed){

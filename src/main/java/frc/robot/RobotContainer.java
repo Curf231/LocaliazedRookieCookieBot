@@ -42,27 +42,56 @@ public class RobotContainer {
 
 
 
+    // new Trigger(() -> m_driverController.getR2Axis() > -0.9)
+    //     .onTrue(
+    //         m_DriveBase.run(() ->
+    //             m_DriveBase.drive(m_driverController.getR2Axis())
+    //         )
+    //     );
+
+    // new Trigger(() -> m_driverController.getL2Axis() > -0.9)
+    //     .onTrue(
+    //         m_DriveBase.run(() ->
+    //             m_DriveBase.drive(m_driverController.getL2Axis())
+    //         )
+    //     );
+
+    // new Trigger(() -> Math.abs(m_driverController.getLeftX()) > 0.3)
+    //     .whileTrue(
+    //         m_DriveBase.run(() ->
+    //             m_DriveBase.rotateManual(m_driverController.getLeftX())
+    //         )
+    //     );
+
+
+
+
+     // Right trigger -> forward
     new Trigger(() -> m_driverController.getR2Axis() > 0.1)
         .whileTrue(
-            m_DriveBase.run(() ->
-                m_DriveBase.drive(m_driverController.getR2Axis())
+            m_DriveBase.run(() -> 
+                m_DriveBase.driveManual(m_driverController.getR2Axis())
             )
         );
 
+    // Left trigger -> backward
     new Trigger(() -> m_driverController.getL2Axis() > 0.1)
         .whileTrue(
-            m_DriveBase.run(() ->
-                m_DriveBase.drive(-m_driverController.getL2Axis())
+            m_DriveBase.run(() -> 
+                m_DriveBase.driveManual(-m_driverController.getL2Axis()) // negative for reverse
             )
         );
 
-    new Trigger(() -> Math.abs(m_driverController.getLeftX()) > 0.3)
+    // Left joystick X-axis -> rotate
+    new Trigger(() -> Math.abs(m_driverController.getLeftX()) > 0.2)
         .whileTrue(
-            m_DriveBase.run(() ->
+            m_DriveBase.run(() -> 
                 m_DriveBase.rotateManual(m_driverController.getLeftX())
             )
         );
-  
+      
+
+ 
 
     // new Trigger(() -> m_driverController.getPOV() == 0)
     // .and(() -> m_driverController.getCrossButton()).whileTrue(
