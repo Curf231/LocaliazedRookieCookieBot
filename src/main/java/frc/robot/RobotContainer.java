@@ -83,7 +83,7 @@ public class RobotContainer {
         );
 
     // Left joystick X-axis -> rotate
-    new Trigger(() -> Math.abs(m_driverController.getLeftX()) > 0.2)
+    new Trigger(() -> Math.abs(m_driverController.getLeftX()) > 0.5)
         .whileTrue(
             m_DriveBase.run(() -> 
                 m_DriveBase.rotateManual(m_driverController.getLeftX())
