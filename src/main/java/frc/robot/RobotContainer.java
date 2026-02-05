@@ -90,7 +90,13 @@ public class RobotContainer {
             )
         );
       
-
+    new Trigger(() -> m_driverController.getCrossButton())
+        .onTrue(
+          m_DriveBase.run(() -> 
+          
+          m_DriveBase.stopMotors()
+          )
+        );
  
 
     // new Trigger(() -> m_driverController.getPOV() == 0)
